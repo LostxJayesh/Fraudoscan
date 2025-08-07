@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home page -->
+  <url>
+    <loc>https://fraudoscan.netlify.app/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Scan Now page (call-to-action) -->
+  <url>
+    <loc>https://fraudoscan.netlify.app/</loc>
+    <!-- This might not be a separate page if Scan Now anchors to the homepage -->
+    <!-- Adjust if it actually leads elsewhere -->
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- How It Works section -->
+  <url>
+    <loc>https://fraudoscan.netlify.app/#how-it-works</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Features section -->
+  <url>
+    <loc>https://fraudoscan.netlify.app/#features</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Contact page -->
+  <url>
+    <loc>https://fraudoscan.netlify.app/#contact</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+</urlset>
