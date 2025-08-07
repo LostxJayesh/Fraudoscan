@@ -1,0 +1,633 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling on the html/body */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f7fa; /* Light Sky Blue */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; Removed as html, body height is 100% */
+    width: 100vw; /* Ensure body takes full width */
+    background-image: url('img/portrait.jpg'); /* Default for all smaller screens */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keeps background fixed when scrolling */
+}
+
+/* Media query for desktop mode (screens wider than 1024px) */
+@media (min-width: 1025px) {
+    body {
+        background-image: url('img/desktop.jpg');
+    }
+}
+
+
+.chat-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent; /* Remove whitish effect */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Added black shadow */
+    border-radius: 0;
+    position: relative; /* Establish a new stacking context */
+    z-index: 1;
+}
+
+.chat-header {
+    background-color: rgba(135, 206, 235, 0.2); /* More transparent SkyBlue */
+    color: #fff;
+    padding: 0.4rem 1rem; /* Adjusted padding to include horizontal padding */
+    text-align: center;
+    border-bottom: 1px solid rgba(176, 224, 230, 0.1); /* More transparent PowderBlue */
+    backdrop-filter: blur(12px); /* Increased blur for more glass-like effect */
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+    display: flex;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center;
+    gap: 10px; /* Add gap for spacing between items */
+    position: relative; /* Establish a new stacking context */
+    z-index: 2; /* Ensure header is above chat-box */
+    animation: slideDownFadeIn 0.5s ease-out forwards; /* Apply animation */
+}
+
+.header-title {
+    flex-grow: 0; /* Prevent it from taking space */
+    text-align: center; /* Center the text within its flex item */
+    color: black; /* Set text color to black */
+    font-weight: bold; /* Make the text bold */
+    font-size: 1.2em; /* Slightly larger font size */
+    min-width: 0; /* Allow it to shrink if needed */
+}
+
+.hamburger-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.burger {
+    position: relative;
+    width: 40px;
+    height: 30px;
+    background: transparent;
+    cursor: pointer;
+    display: block;
+}
+
+.burger input {
+    display: none;
+}
+
+.burger span {
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    background: black;
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+.burger span:nth-of-type(1) {
+    top: 0px;
+    transform-origin: left center;
+}
+
+.burger span:nth-of-type(2) {
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: left center;
+}
+
+.burger span:nth-of-type(3) {
+    top: 100%;
+    transform-origin: left center;
+    transform: translateY(-100%);
+}
+
+.burger input:checked ~ span:nth-of-type(1) {
+    transform: rotate(45deg);
+    top: 0px;
+    left: 5px;
+}
+
+.burger input:checked ~ span:nth-of-type(2) {
+    width: 0%;
+    opacity: 0;
+}
+
+.burger input:checked ~ span:nth-of-type(3) {
+    transform: rotate(-45deg);
+    top: 28px;
+    left: 5px;
+}
+
+.menu-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 180px; /* Slightly wider to accommodate icons and text */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 3; /* Ensure it's on top of everything */
+    right: 0; /* Align to the right of the hamburger icon */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px; /* Space below the icon */
+    transform-origin: top right; /* For potential future animations */
+    animation: fadeInScale 0.3s ease-out forwards; /* Add a subtle animation */
+}
+
+.menu-content a {
+    color: #333; /* Darker text color */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex; /* Use flexbox for icon and text alignment */
+    align-items: center; /* Vertically align icon and text */
+    transition: background-color 0.3s ease;
+}
+
+.menu-content a i,
+.menu-content a svg { /* Apply styles to both <i> and <svg> elements */
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 1.2em; /* Slightly larger icons */
+    /* Ensure SVG scales properly */
+    width: 1.2em; 
+    height: 1.2em;
+    min-width: 24px; /* Ensure a minimum size for visibility */
+    min-height: 24px;
+}
+
+.menu-content a:hover {
+    background-color: #ddd;
+}
+
+.menu-content.show {
+    display: block;
+}
+
+.risk-meter {
+    flex-grow: 1; /* Allow it to grow and take available space */
+    height: 20px;
+    background: rgba(255, 255, 255, 0.05); /* Even more transparent background */
+    border-radius: 10px;
+    margin: 0; /* Remove auto margin */
+    overflow: hidden;
+    backdrop-filter: blur(12px); /* Increased blur for more glass-like effect */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Even lighter border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Lighter shadow */
+    flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+.risk-level-bar {
+    height: 100%;
+    width: 0; /* Start with 0 width */
+    background-color: #4caf50; /* Default to green */
+    transition: width 0.7s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.7s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.5); /* Black border with some transparency */
+}
+
+.risk-safe {
+    width: 33%;
+    background-color: #4caf50; /* Green */
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.7); /* Green glow */
+}
+
+.risk-warning {
+    width: 66%;
+    background-color: #ffeb3b; /* Yellow */
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.7); /* Yellow glow */
+}
+
+.risk-danger {
+    width: 100%;
+    background-color: #f44336; /* Red */
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.7); /* Red glow */
+}
+
+.chat-box {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: transparent; /* Ensure it's transparent */
+    position: relative; /* Establish stacking context */
+    z-index: 0; /* Ensure it's below the menu */
+}
+
+.chat-message {
+    padding: 1rem;
+    border-radius: 20px; /* Increased for more curved edges */
+    max-width: 70%;
+    line-height: 1.6;
+    overflow-wrap: break-word; /* Ensures long words break and wrap */
+    opacity: 0; /* Start hidden for animation */
+    transform: translateY(20px); /* Start slightly below for slide-up effect */
+    animation: fadeInSlideUp 0.6s ease-out forwards;
+    position: relative; /* For potential future enhancements like pop-out effects */
+}
+
+.user-message {
+    background-color: #b0e0e6; /* PowderBlue */
+    color: #000;
+    align-self: flex-end;
+}
+
+.bot-message {
+    background-color: #fff;
+    align-self: flex-start;
+    border: 1px solid #ddd;
+    transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+}
+
+.chat-gif {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+
+.bot-message-safe {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.bot-message-warning {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.bot-message-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.chat-input {
+    display: flex;
+    padding: 1rem;
+    border-top: none;
+    background-color: transparent;
+    align-items: center; /* Added for vertical alignment */
+    position: relative; /* For positioning the model switch menu */
+    animation: fadeInSlideUp 0.5s ease-out forwards; /* Apply animation */
+}
+
+.model-switch-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px; /* Space between button and input */
+}
+
+.model-switch-button {
+    background: royalblue;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make it round */
+    width: 40px; /* Size of the button */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.2em; /* Icon size */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Added black shadow */
+}
+
+.model-switch-button:hover {
+    background-color: #4169e1; /* Darker blue on hover */
+}
+
+.model-switch-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10; /* Ensure it's above other elements */
+    bottom: 100%; /* Position above the button */
+    left: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px; /* Space between menu and button */
+    transform-origin: bottom left;
+    animation: fadeInScale 0.3s ease-out forwards;
+}
+
+.model-switch-menu a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.model-switch-menu a i,
+.model-switch-menu a svg {
+    margin-right: 10px;
+    font-size: 1.2em;
+    width: 1.2em; 
+    height: 1.2em;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+.model-switch-menu a:hover {
+    background-color: #ddd;
+}
+
+.model-switch-menu.show {
+    display: block;
+}
+
+#message-input {
+    flex-grow: 1;
+    font-family: inherit;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.7); /* Slightly less transparent */
+    color: #333;
+    padding: 0.8em 1.2em; /* Increased padding */
+    border: 1px solid rgba(176, 224, 230, 0.5); /* Subtle border */
+    border-radius: 25px; /* More rounded corners */
+    backdrop-filter: blur(8px); /* Increased blur effect */
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.3s ease-in-out; /* Smooth transitions for all effects */
+}
+
+#message-input:focus {
+    outline: none;
+    border-color: royalblue; /* Highlight border on focus */
+    box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.5), 0 4px 10px rgba(0, 0, 0, 0.2); /* More prominent glow and shadow */
+    animation: pulseBorder 1.5s infinite alternate; /* Add pulse animation on focus */
+}
+
+#message-input:hover {
+    transform: translateY(-2px); /* Slightly lift the input */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* More pronounced shadow on hover */
+    border-radius: 30px; /* Slightly more rounded on hover */
+    background-color: rgba(255, 255, 255, 0.8); /* Subtle background change on hover */
+}
+
+@keyframes pulseBorder {
+    from {
+        border-color: rgba(176, 224, 230, 0.5);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    to {
+        border-color: royalblue;
+        box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.5), 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+#send-button {
+  font-family: inherit;
+  font-size: 20px;
+  background: royalblue;
+  color: white;
+  padding: 0.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+  margin-left: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Added black shadow */
+}
+
+#send-button svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+#send-button:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+#send-button:hover svg {
+  transform: rotate(45deg) scale(1.1);
+}
+
+#send-button:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+
+.bouncing-loader {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.bouncing-loader > div {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background-color: #1d4ed8;
+  animation: bounce 1s infinite;
+}
+
+.bouncing-loader > div:nth-child(1) {
+  animation-delay: .7s;
+}
+
+.bouncing-loader > div:nth-child(2) {
+  animation-delay: .3s;
+}
+
+.bouncing-loader > div:nth-child(3) {
+  animation-delay: .7s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes fadeInSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideDownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    body {
+        /* Ensure body still centers content but allows for full width */
+        align-items: flex-start; /* Align to top for better content flow on small screens */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .chat-container {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100%; /* Ensure it doesn't exceed screen width */
+        max-height: 100%; /* Ensure it doesn't exceed screen height */
+        border-radius: 0; /* No rounded corners on full-screen mobile */
+        box-shadow: none; /* No shadow on full-screen mobile */
+    }
+
+    .chat-header {
+        padding: 0.5rem 1rem; /* Adjust padding for smaller screens */
+    }
+
+    .risk-meter {
+        /* flex-grow will handle width */
+        height: 18px; /* Slightly smaller height for mobile */
+        border-radius: 9px; /* Adjust border-radius for smaller height */
+    }
+
+    .risk-level-bar {
+        border-radius: 9px; /* Adjust border-radius for smaller height */
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); /* Slightly less intense shadow */
+    }
+
+    .chat-box {
+        padding: 0.5rem; /* Reduce padding for chat box */
+        gap: 0.5rem; /* Reduce gap between messages */
+    }
+
+    .chat-message {
+        padding: 0.8rem; /* Adjust message padding */
+        max-width: 85%; /* Allow messages to take more width */
+        font-size: 0.95rem; /* Slightly smaller font size for messages */
+    }
+
+    .chat-input {
+        padding: 0.5rem; /* Adjust input area padding */
+    }
+
+    #message-input {
+        font-size: 1rem; /* Adjust input font size */
+        padding: 0.6em 0.8em; /* Adjust input padding */
+    }
+
+    #send-button {
+        font-size: 1rem; /* Adjust button font size */
+        padding: 0.6em; /* Adjust button padding */
+        margin-left: 0.5rem; /* Reduce margin */
+    }
+
+    .menu-content {
+        min-width: 150px; /* Smaller menu width */
+        margin-top: 5px; /* Less space below icon */
+    }
+
+    .menu-content a {
+        padding: 10px 12px; /* Smaller menu item padding */
+        font-size: 0.9rem; /* Smaller menu item font size */
+    }
+
+    .menu-content a i {
+        margin-right: 8px; /* Smaller icon margin */
+        font-size: 1em; /* Smaller icon size */
+    }
+}
+
+/* Specific adjustments for very small screens (e.g., older phones) */
+@media (max-width: 480px) {
+    .chat-header {
+        padding: 0.3rem 0.8rem;
+    }
+
+    .risk-meter {
+        /* flex-grow will handle width */
+        height: 16px; /* Even smaller height for very small screens */
+        border-radius: 8px;
+    }
+
+    .risk-level-bar {
+        border-radius: 8px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .burger {
+        width: 35px;
+        height: 25px;
+    }
+
+    .burger span {
+        height: 3px;
+    }
+
+    .burger input:checked ~ span:nth-of-type(1) {
+        left: 4px;
+    }
+
+    .burger input:checked ~ span:nth-of-type(3) {
+        top: 22px;
+        left: 4px;
+    }
+
+    .chat-message {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    #message-input {
+        font-size: 0.9rem;
+        padding: 0.5em 0.7em;
+    }
+
+    #send-button {
+        font-size: 0.9rem;
+        padding: 0.5em;
+    }
+}
