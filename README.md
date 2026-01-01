@@ -6,7 +6,7 @@
 
 Fraudoscan is an AI-powered website scam detector that helps users identify **fake, fraud, phishing, and suspicious websites** before they fall victim to online scams.
 
-🔗 Live Website: https://fraudoscan.netlify.app/
+🔗 Live Website: (https://fraudoscan.netlify.app/)
 
 Fraudoscan analyzes domains using trust and safety indicators such as:
 
