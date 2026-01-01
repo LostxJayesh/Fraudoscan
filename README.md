@@ -1,56 +1,61 @@
-# 🚨 Fraudoscan — AI-Powered Fraud & Scam Website Detector
+<p align="center">
+  <img src="https://fraudoscan.netlify.app/Logo.png" alt="Fraudoscan Logo" width="160">
+</p>
 
-Fraudoscan is an AI-powered web tool designed to help users identify **potential scam, phishing, and fraudulent websites** before they fall victim to online fraud.
+<h1 align="center">🚨 Fraudoscan — AI Powered Scam & Phishing Website Detector</h1>
 
-🔗 **Live Website:** https://fraudoscan.netlify.app/
+Fraudoscan is an AI-powered website scam detector that helps users identify **fake, fraud, phishing, and suspicious websites** before they fall victim to online scams.
 
-It analyzes domains using multiple trust signals such as:
-- Domain age & verification checks
-- SSL / HTTPS status
-- Suspicious patterns & red flags
-- Content behavior analysis
-- AI-driven fraud probability insights
+🔗 Live Website: https://fraudoscan.netlify.app/
 
-Fraudoscan’s goal is to **promote safer browsing and digital awareness** for everyone.
+Fraudoscan analyzes domains using trust and safety indicators such as:
+
+- Domain age & verification checks  
+- SSL / HTTPS validation  
+- Suspicious pattern detection  
+- Website behavior analysis  
+- AI-generated fraud probability insights  
+
+Fraudoscan’s mission is to **promote cyber-safety, scam awareness, and secure browsing for users online**.
 
 ---
 
 ## 🧠 Key Features
 
-✔ Detects suspicious & fake websites  
-✔ Flags phishing-like behavior  
-✔ Highlights trust indicators  
-✔ Helps users make safer decisions  
-✔ Provides AI-generated scam insights  
+- Detects suspicious & fake websites  
+- Identifies phishing-style web pages  
+- Highlights domain trust indicators  
+- Helps users make safe browsing decisions  
+- Provides AI-based scam insights  
 
-Built for students, developers, creators, and everyday internet users who want to stay safe online.
+Suitable for students, developers, creators, and everyday internet users who want to stay safe online.
 
 ---
 
-## 🔒 Security & Privacy
+## 🔒 Security & Privacy Policy
 
 Fraudoscan respects user privacy.
 
-The website **only stores user chat / text history** to improve the experience.
+The platform **only stores user chat / text history** to improve user experience.
 
-It does **NOT** store or collect:
+Fraudoscan does **NOT** store or collect:
 
 - Documents  
 - Images  
 - Files  
 - Personal identity data  
 
-No sensitive information is logged or shared.
+No sensitive information is logged, tracked, or shared.
 
 ---
 
-## ⚠️ Developer Note (If Publishing Publicly)
+## ⚠️ Developer Note (For Public Repositories)
 
-If you upload this project to GitHub:
+If you upload Fraudoscan to GitHub:
 
-- Do **NOT** expose Supabase credentials  
-- Do **NOT** expose AI API keys  
-- Do **NOT** commit `.env` files  
+- Do NOT expose Supabase credentials  
+- Do NOT expose AI API keys  
+- Do NOT commit `.env` files  
 
 Use environment variables instead:
 
@@ -66,16 +71,28 @@ AI_API_KEY=
 
 - HTML, CSS, JavaScript  
 - AI-assisted domain analysis  
-- Supabase (for text chat history)
+- Supabase (stores text history only)
 - Netlify (hosting)
 
 ---
 
-## 🙌 Credits
+## 👤 Author
 
-Fraudoscan is a personal learning and cyber-awareness project by **Lost X Jayesh**.
+Fraudoscan is a personal cyber-awareness project by **Lost X Jayesh**.
 
-Thanks to everyone supporting and testing the platform ❤️
+---
+
+## 👥 Connect With Me
+
+Follow and connect with me on social media:
+
+🔗 Instagram — https://www.instagram.com/jayesh__6z
+
+---
+
+## 🔎 SEO Keywords (Project Discovery)
+
+fraudoscan, fraudoscan ai, scam website detector, phishing website checker, fake website checker, website scam scanner, online fraud detection tool, domain scam checker, fraud website analyzer
 
 ---
 
